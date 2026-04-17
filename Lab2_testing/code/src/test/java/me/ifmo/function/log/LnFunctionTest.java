@@ -1,16 +1,25 @@
 package me.ifmo.function.log;
 
+import me.ifmo.util.CsvExporter;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LnFunctionTest {
 
-    private final LnFunction lnFunction = new LnFunction();
+    private static final LnFunction lnFunction = new LnFunction();
+
     private static final double EPS = 1e-6;
     private static final double DELTA = 1e-5;
+
+    private static final double CSV_START = 0.1;
+    private static final double CSV_END = 100.0;
+    private static final double CSV_STEP = 0.25;
 
     @Test
     @DisplayName("ln(1) = 0: проверка базовой точки натурального логарифма")
@@ -96,5 +105,19 @@ class LnFunctionTest {
     void shouldThrowExceptionForNegativeEps() {
         assertThrows(IllegalArgumentException.class,
                 () -> lnFunction.calculate(2.0, -1e-6));
+    }
+
+    @AfterAll
+    static void exportLnValuesToCsv() throws IOException {
+        CsvExporter exporter = new CsvExporter();
+        exporter.export(
+                lnFunction,
+                CSV_START,
+                CSV_END,
+                CSV_STEP,
+                EPS,
+                "ln.csv",
+                "ln(X)"
+        );
     }
 }

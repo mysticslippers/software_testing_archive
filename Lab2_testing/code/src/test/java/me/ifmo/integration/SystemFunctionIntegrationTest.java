@@ -79,7 +79,6 @@ class SystemFunctionIntegrationTest {
 
         double x = 2.0;
 
-        // По текущей формуле логарифмической ветки результат сводится к 0
         double expected = 0.0;
 
         assertEquals(expected, system.calculate(x, EPS), DELTA);
