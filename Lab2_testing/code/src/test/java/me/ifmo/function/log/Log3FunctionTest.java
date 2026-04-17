@@ -17,8 +17,8 @@ class Log3FunctionTest {
     private static final double EPS = 1e-6;
     private static final double DELTA = 1e-5;
     private static final double ETALON_DELTA = 1e-2;
-    
-    private static final double CSV_START = 0.1;
+
+    private static final double CSV_START = 0.25;
     private static final double CSV_END = 100.0;
     private static final double CSV_STEP = 0.25;
 
