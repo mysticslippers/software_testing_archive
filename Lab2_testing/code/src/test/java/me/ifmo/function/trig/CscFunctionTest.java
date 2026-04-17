@@ -1,8 +1,8 @@
 package me.ifmo.function.trig;
 
 import me.ifmo.function.MathFunction;
-import me.ifmo.util.CsvBackedMathFunction;
 import me.ifmo.util.CsvExporter;
+import me.ifmo.util.CsvMockitoUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -87,7 +87,7 @@ class CscFunctionTest {
     @Test
     @DisplayName("Интеграция csc -> sin.csv: значения должны совпадать с csc на реальном Sin")
     void shouldCalculateCscUsingCsvSin() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
         MathFunction cscWithCsvDependency = new CscFunction(sinFromCsv);
 
         MathFunction realSin = new SinFunction();
@@ -108,7 +108,7 @@ class CscFunctionTest {
     @Test
     @DisplayName("Интеграция csc -> sin.csv: значения должны совпадать с эталонным 1/sin(x) в устойчивых точках")
     void shouldMatchReferenceCscUsingCsvSin() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
         MathFunction cscWithCsvDependency = new CscFunction(sinFromCsv);
 
         for (double x = CSV_START; x <= CSV_END; x += CSV_STEP) {
@@ -127,7 +127,7 @@ class CscFunctionTest {
 
     @AfterAll
     static void exportCscValuesToCsv() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
         MathFunction cscFromCsvDependency = new CscFunction(sinFromCsv);
 
         CsvExporter exporter = new CsvExporter();

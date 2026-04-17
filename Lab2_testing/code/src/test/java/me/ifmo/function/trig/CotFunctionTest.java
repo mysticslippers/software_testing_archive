@@ -1,8 +1,8 @@
 package me.ifmo.function.trig;
 
 import me.ifmo.function.MathFunction;
-import me.ifmo.util.CsvBackedMathFunction;
 import me.ifmo.util.CsvExporter;
+import me.ifmo.util.CsvMockitoUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -103,8 +103,8 @@ class CotFunctionTest {
     @Test
     @DisplayName("Интеграция cot -> sin.csv + cos.csv: значения должны совпадать с cot на реальных Sin/Cos")
     void shouldCalculateCotUsingCsvSinAndCsvCos() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
-        MathFunction cosFromCsv = new CsvBackedMathFunction(COS_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
+        MathFunction cosFromCsv = CsvMockitoUtil.mockFromCsv(COS_CSV_FILE);
 
         MathFunction cotWithCsvDependencies = new CotFunction(sinFromCsv, cosFromCsv);
 
@@ -127,8 +127,8 @@ class CotFunctionTest {
     @Test
     @DisplayName("Интеграция cot -> sin.csv + cos.csv: значения должны совпадать с эталонным cos(x)/sin(x) в устойчивых точках")
     void shouldMatchReferenceCotUsingCsvSinAndCsvCos() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
-        MathFunction cosFromCsv = new CsvBackedMathFunction(COS_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
+        MathFunction cosFromCsv = CsvMockitoUtil.mockFromCsv(COS_CSV_FILE);
 
         MathFunction cotWithCsvDependencies = new CotFunction(sinFromCsv, cosFromCsv);
 
@@ -148,8 +148,8 @@ class CotFunctionTest {
 
     @AfterAll
     static void exportCotValuesToCsv() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
-        MathFunction cosFromCsv = new CsvBackedMathFunction(COS_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
+        MathFunction cosFromCsv = CsvMockitoUtil.mockFromCsv(COS_CSV_FILE);
         MathFunction cotFromCsvDependencies = new CotFunction(sinFromCsv, cosFromCsv);
 
         CsvExporter exporter = new CsvExporter();

@@ -1,8 +1,8 @@
 package me.ifmo.function.trig;
 
 import me.ifmo.function.MathFunction;
-import me.ifmo.util.CsvBackedMathFunction;
 import me.ifmo.util.CsvExporter;
+import me.ifmo.util.CsvMockitoUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -103,8 +103,8 @@ class TanFunctionTest {
     @Test
     @DisplayName("Интеграция tan -> sin.csv + cos.csv: значения должны совпадать с tan на реальных Sin/Cos")
     void shouldCalculateTanUsingCsvSinAndCsvCos() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
-        MathFunction cosFromCsv = new CsvBackedMathFunction(COS_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
+        MathFunction cosFromCsv = CsvMockitoUtil.mockFromCsv(COS_CSV_FILE);
 
         MathFunction tanWithCsvDependencies = new TanFunction(sinFromCsv, cosFromCsv);
 
@@ -127,8 +127,8 @@ class TanFunctionTest {
     @Test
     @DisplayName("Интеграция tan -> sin.csv + cos.csv: значения должны совпадать с эталонным Math.tan в устойчивых точках")
     void shouldMatchMathTanUsingCsvSinAndCsvCos() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
-        MathFunction cosFromCsv = new CsvBackedMathFunction(COS_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
+        MathFunction cosFromCsv = CsvMockitoUtil.mockFromCsv(COS_CSV_FILE);
 
         MathFunction tanWithCsvDependencies = new TanFunction(sinFromCsv, cosFromCsv);
 
@@ -147,8 +147,8 @@ class TanFunctionTest {
 
     @AfterAll
     static void exportTanValuesToCsv() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
-        MathFunction cosFromCsv = new CsvBackedMathFunction(COS_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
+        MathFunction cosFromCsv = CsvMockitoUtil.mockFromCsv(COS_CSV_FILE);
         MathFunction tanFromCsvDependencies = new TanFunction(sinFromCsv, cosFromCsv);
 
         CsvExporter exporter = new CsvExporter();

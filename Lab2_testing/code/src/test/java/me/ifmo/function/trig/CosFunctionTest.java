@@ -1,8 +1,8 @@
 package me.ifmo.function.trig;
 
 import me.ifmo.function.MathFunction;
-import me.ifmo.util.CsvBackedMathFunction;
 import me.ifmo.util.CsvExporter;
+import me.ifmo.util.CsvMockitoUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -83,7 +83,7 @@ class CosFunctionTest {
     @Test
     @DisplayName("Интеграция cos -> sin.csv: значения должны совпадать с cos на реальном SinFunction")
     void shouldCalculateCosUsingSinValuesFromCsv() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
 
         MathFunction cosWithCsvSin = new CosFunction(sinFromCsv);
         MathFunction cosWithRealSin = new CosFunction(new SinFunction());
@@ -103,7 +103,7 @@ class CosFunctionTest {
     @Test
     @DisplayName("Интеграция cos -> sin.csv: значения должны совпадать с эталонным Math.cos")
     void shouldMatchMathCosUsingSinValuesFromCsv() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
         MathFunction cosWithCsvSin = new CosFunction(sinFromCsv);
 
         for (double t = SIN_CSV_START; t <= SIN_CSV_END; t += SIN_CSV_STEP) {
@@ -120,7 +120,7 @@ class CosFunctionTest {
 
     @AfterAll
     static void exportCosValuesToCsv() throws IOException {
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
         MathFunction cosFromCsvSin = new CosFunction(sinFromCsv);
 
         CsvExporter exporter = new CsvExporter();

@@ -1,8 +1,8 @@
 package me.ifmo.function.log;
 
 import me.ifmo.function.MathFunction;
-import me.ifmo.util.CsvBackedMathFunction;
 import me.ifmo.util.CsvExporter;
+import me.ifmo.util.CsvMockitoUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -84,7 +84,7 @@ class Log3FunctionTest {
     @Test
     @DisplayName("Интеграция log3 -> ln.csv: значения должны совпадать с log3 на реальном LnFunction")
     void shouldCalculateLog3UsingCsvLn() throws IOException {
-        MathFunction lnFromCsv = new CsvBackedMathFunction(LN_CSV_FILE);
+        MathFunction lnFromCsv = CsvMockitoUtil.mockFromCsv(LN_CSV_FILE);
         MathFunction log3WithCsvDependency = new Log3Function(lnFromCsv);
 
         MathFunction realLn = new LnFunction();
@@ -101,7 +101,7 @@ class Log3FunctionTest {
     @Test
     @DisplayName("Интеграция log3 -> ln.csv: значения должны совпадать с эталонным log(x)/log(3)")
     void shouldMatchReferenceLog3UsingCsvLn() throws IOException {
-        MathFunction lnFromCsv = new CsvBackedMathFunction(LN_CSV_FILE);
+        MathFunction lnFromCsv = CsvMockitoUtil.mockFromCsv(LN_CSV_FILE);
         MathFunction log3WithCsvDependency = new Log3Function(lnFromCsv);
 
         for (double x = CSV_START; x <= CSV_END; x += CSV_STEP) {
@@ -114,7 +114,7 @@ class Log3FunctionTest {
 
     @AfterAll
     static void exportLog3ValuesToCsv() throws IOException {
-        MathFunction lnFromCsv = new CsvBackedMathFunction(LN_CSV_FILE);
+        MathFunction lnFromCsv = CsvMockitoUtil.mockFromCsv(LN_CSV_FILE);
         MathFunction log3FromCsvDependency = new Log3Function(lnFromCsv);
 
         CsvExporter exporter = new CsvExporter();

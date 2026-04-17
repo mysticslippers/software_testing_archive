@@ -9,8 +9,8 @@ import me.ifmo.function.trig.CotFunction;
 import me.ifmo.function.trig.CscFunction;
 import me.ifmo.function.trig.SinFunction;
 import me.ifmo.function.trig.TanFunction;
-import me.ifmo.util.CsvBackedMathFunction;
 import me.ifmo.util.CsvExporter;
+import me.ifmo.util.CsvMockitoUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -75,8 +75,8 @@ class SystemFunctionTest {
                 "cos(X)"
         );
 
-        MathFunction sinFromCsv = new CsvBackedMathFunction(SIN_CSV_FILE);
-        MathFunction cosFromCsv = new CsvBackedMathFunction(COS_CSV_FILE);
+        MathFunction sinFromCsv = CsvMockitoUtil.mockFromCsv(SIN_CSV_FILE);
+        MathFunction cosFromCsv = CsvMockitoUtil.mockFromCsv(COS_CSV_FILE);
 
         MathFunction tanFromCsvDeps = new TanFunction(sinFromCsv, cosFromCsv);
         exporter.export(
@@ -123,7 +123,7 @@ class SystemFunctionTest {
                 "ln(X)"
         );
 
-        MathFunction lnFromCsv = new CsvBackedMathFunction(LN_CSV_FILE);
+        MathFunction lnFromCsv = CsvMockitoUtil.mockFromCsv(LN_CSV_FILE);
 
         MathFunction log3FromCsvDeps = new Log3Function(lnFromCsv);
         exporter.export(
@@ -412,13 +412,13 @@ class SystemFunctionTest {
     @Test
     @DisplayName("Интеграция system -> trig.csv + log.csv: значения должны совпадать с системой на реальных зависимостях")
     void shouldCalculateSystemUsingCsvDependencies() throws IOException {
-        MathFunction tanFromCsv = new CsvBackedMathFunction(TAN_CSV_FILE);
-        MathFunction cscFromCsv = new CsvBackedMathFunction(CSC_CSV_FILE);
-        MathFunction cotFromCsv = new CsvBackedMathFunction(COT_CSV_FILE);
+        MathFunction tanFromCsv = CsvMockitoUtil.mockFromCsv(TAN_CSV_FILE);
+        MathFunction cscFromCsv = CsvMockitoUtil.mockFromCsv(CSC_CSV_FILE);
+        MathFunction cotFromCsv = CsvMockitoUtil.mockFromCsv(COT_CSV_FILE);
 
-        MathFunction lnFromCsv = new CsvBackedMathFunction(LN_CSV_FILE);
-        MathFunction log3FromCsv = new CsvBackedMathFunction(LOG3_CSV_FILE);
-        MathFunction log10FromCsv = new CsvBackedMathFunction(LOG10_CSV_FILE);
+        MathFunction lnFromCsv = CsvMockitoUtil.mockFromCsv(LN_CSV_FILE);
+        MathFunction log3FromCsv = CsvMockitoUtil.mockFromCsv(LOG3_CSV_FILE);
+        MathFunction log10FromCsv = CsvMockitoUtil.mockFromCsv(LOG10_CSV_FILE);
 
         MathFunction systemWithCsvDeps = new SystemFunction(
                 tanFromCsv,
@@ -467,13 +467,13 @@ class SystemFunctionTest {
 
     @AfterAll
     static void exportSystemValuesToCsv() throws IOException {
-        MathFunction tanFromCsv = new CsvBackedMathFunction(TAN_CSV_FILE);
-        MathFunction cscFromCsv = new CsvBackedMathFunction(CSC_CSV_FILE);
-        MathFunction cotFromCsv = new CsvBackedMathFunction(COT_CSV_FILE);
+        MathFunction tanFromCsv = CsvMockitoUtil.mockFromCsv(TAN_CSV_FILE);
+        MathFunction cscFromCsv = CsvMockitoUtil.mockFromCsv(CSC_CSV_FILE);
+        MathFunction cotFromCsv = CsvMockitoUtil.mockFromCsv(COT_CSV_FILE);
 
-        MathFunction lnFromCsv = new CsvBackedMathFunction(LN_CSV_FILE);
-        MathFunction log3FromCsv = new CsvBackedMathFunction(LOG3_CSV_FILE);
-        MathFunction log10FromCsv = new CsvBackedMathFunction(LOG10_CSV_FILE);
+        MathFunction lnFromCsv = CsvMockitoUtil.mockFromCsv(LN_CSV_FILE);
+        MathFunction log3FromCsv = CsvMockitoUtil.mockFromCsv(LOG3_CSV_FILE);
+        MathFunction log10FromCsv = CsvMockitoUtil.mockFromCsv(LOG10_CSV_FILE);
 
         MathFunction systemFromCsvDeps = new SystemFunction(
                 tanFromCsv,
